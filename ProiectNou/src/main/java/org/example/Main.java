@@ -38,10 +38,10 @@ public class Main
    //   op.addOperation(p1);
     //  op.substrOperation(p1);
      //   op.multiplication(p1);
-       op.integrate();
+       //op.integrate();
         //op.derivate();
       //p.metoda();
-
+      op.regexmethod("2x^5+4x+3");
 
     }
 }

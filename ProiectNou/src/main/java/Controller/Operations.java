@@ -1,6 +1,9 @@
 package Controller;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import Model.Polinom;
+import com.sun.jdi.IntegerValue;
 
 import java.util.Map;
 import java.util.TreeMap;
@@ -83,7 +86,6 @@ public class Operations {
         for (Integer key3 : polinom1.getPolinom().keySet())
             System.out.println(polinom1.getPolinom().get(key3)+"x^"+key3);
     }
-
     public void integrate()
     {
         Polinom result= new Polinom();
@@ -96,6 +98,36 @@ public class Operations {
         for (Integer key3 : polinom1.getPolinom().keySet())
             System.out.println(polinom1.getPolinom().get(key3)+"x^"+key3);
     }
+    public void regexmethod(String text) {
 
+       Pattern pattern = Pattern.compile("[+-]?\\d*x?\\^?\\d*");
+        Matcher matcher = pattern.matcher(text);
+
+        while (matcher.find()) {
+            String match = matcher.group();
+            Pattern monomialPattern = Pattern.compile("([+-]?)(\\d*)(x?)(\\^?\\d*)");
+            Matcher monomialMatcher = monomialPattern.matcher(match);
+            if (monomialMatcher.matches()) {
+                if (monomialMatcher.group(1) != null && monomialMatcher.group(2) != null && monomialMatcher.group(3) != null && monomialMatcher.group(4) != null) {
+                    String sign = monomialMatcher.group(1);
+                    //  System.out.println(sign);
+                    String coefficient = monomialMatcher.group(2);
+                    if (coefficient.equals("")) {
+
+                        if (sign.equals("+")) coefficient = "1";
+                        else coefficient = "-1";
+
+                    }
+                    String variable = monomialMatcher.group(3);
+                    String exponent = monomialMatcher.group(4);
+                    if (exponent.equals("")) {
+                        if (variable.equals("x")) exponent = "^1";
+                        else exponent = "^0";
+                    }
+                    System.out.println("Coeff: " + coefficient + " " + variable + ", Exp: " + exponent);
+                }
+            }
+        }
+    }
 
 }
